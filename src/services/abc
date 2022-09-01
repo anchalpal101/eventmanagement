@@ -1,0 +1,112 @@
+// import { Validator } from "../../../common/resp-handler/Validator/validator"
+// import { check, body } from 'express-validator'
+// var constant = require('../../../common/resp-handler/constants')
+// var constants = require('../../../common/constants')
+// class OrganisationValidator extends Validator {
+//   constructor() {
+//     super(
+//       {
+
+//         // Validation for Organisation Create
+//         create: [
+//           check('orgName').trim().notEmpty().withMessage("Organisation Name is required"),
+//           check('parentId').trim()
+//             .custom((parentId, { req }) => {
+//               let { levelCode } = req.body
+//               if (levelCode != constants.LEVEL_MODULE.LEVEL_ORG) {
+//                 if (parentId == '' || parentId == null) {
+//                   return false
+//                 }
+//               }
+//               return true
+//             })
+//             .withMessage("ParentId is required"),
+
+//           check('isActive').trim().optional({ nullable: true }).isBoolean().withMessage('boolean value is required'),
+//           check('address1').trim()
+//           .custom((address1, { req }) => {
+//             let { levelCode } = req.body
+//             if (levelCode == constants.LEVEL_MODULE.LEVEL_ORG) {
+//               if (address1 == '' || address1 == null) {
+//                 return false
+//               }
+//             }
+//             return true
+//           })
+//           .withMessage('address1 is required'),
+
+//           check('address2').trim().optional(),
+//           check('city').trim()
+//             .custom((city, { req }) => {
+//               let { levelCode } = req.body
+//               if (levelCode == constants.LEVEL_MODULE.LEVEL_ORG) {
+//                 if (city == '' || city == null) {
+//                   return false
+//                 }
+//                 else {
+//                   return true
+//                 }
+//               }
+//               return true
+//             })
+//             .withMessage('city is required and only alphaNumeric is required'),
+
+//           check('state').trim()
+//             .custom((state, { req }) => {
+//               let { levelCode } = req.body
+//               if (levelCode == constants.LEVEL_MODULE.LEVEL_ORG) {
+//                 if (state == '' || state == null) {
+//                   return false
+//                 }
+//                 else {
+//                     return true
+//                 }
+//               }
+//               return true
+//             })
+//             .withMessage('state is required and only alphaNumeric is required'),
+
+//           check('country').trim()
+//             .custom((country, { req }) => {
+//               let { levelCode } = req.body
+//               if (levelCode == constants.LEVEL_MODULE.LEVEL_ORG) {
+//                 if (country == '' || country == null) {
+//                   return false
+//                 }
+//                 else {
+//                   if (!(country.match("^[A-Za-z0-9 ,-]+$"))) {
+//                     return false
+//                   }
+//                   else {
+//                     return true
+//                   }
+//                 }
+//               }
+//               return true
+//             })
+//             .withMessage('country is required and only alphaNumeric is required'),
+
+//           check('zipcode').trim()
+//             .custom((zipcode, { req }) => {
+//               let { levelCode } = req.body
+//               if (levelCode == constants.LEVEL_MODULE.LEVEL_ORG) {
+//                 if (zipcode == '' || zipcode == null) {
+//                   return false
+//                 }
+//                 else {
+//                   if (zipcode.length == 5 || zipcode.length == 10) {
+//                     check('zipcode').isAlphanumeric('en-US', { ignore: '-' })
+//                     var validZipTest = /(^[0-9]{5}$)|(^[0-9]{5}\b-[0-9]{4}$)/;
+//                     if (zipcode.match(validZipTest) == null) {
+//                       return false
+//                     }
+//                   }
+//                   else {
+//                     return false
+//                   }
+//                 }
+//               }
+//         ]
+//       }
+//     }
+//   }
