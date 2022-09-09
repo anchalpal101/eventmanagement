@@ -13,9 +13,10 @@ const calendarValidator  = new CalenderValidator()
 mainRouter.route('/api/v1/calender').post(calendarValidator.makeValidation('create'),event.create)
 
 mainRouter.route('/api/v1/calender').get(event.readAll)
-mainRouter.route('/api/v1/delete').delete(event.deleteEvent)
+mainRouter.route('/api/v1/calender/:id').get(event.readbyId)
+mainRouter.route('/api/v1/calender').delete(event.deleteEvent)
 mainRouter.route('/api/v1/calender/:id').delete(event.deleteEventById)
-mainRouter.route('/api/v1/update/:id').put(event.updateEvent)
+mainRouter.route('/api/v1/calender/:id').put(event.updateEvent)
 
 // router.post(
 //     '/', 

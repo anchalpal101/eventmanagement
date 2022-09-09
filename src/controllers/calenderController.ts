@@ -25,12 +25,22 @@ class calenderController {
 
             })
             .catch((err) => {
-                console.log(">>>>>>>>>>>>>>>", err)
                 respHndlr.sendError(res, err)
 
             })
     }
 
+    readbyId(req: Request, res: Response) {
+        eventServiceInstance.getEventbyId(req)
+            .then((result) => {
+                respHndlr.sendSuccess(res, result, RESPONSE_STATUS.SUCCESS)
+
+            })
+            .catch((err) => {
+                respHndlr.sendError(res, err)
+
+            })
+    }
 
     deleteEvent(req: Request, res: Response) {
         eventServiceInstance.deleteEvent(req)
@@ -56,7 +66,7 @@ class calenderController {
     updateEvent(req: Request, res: Response) {
         eventServiceInstance.updateEvent(req)
             .then((result) => {
-                respHndlr.sendSuccess(res, result, RESPONSE_STATUS.SUCCESS)
+                respHndlr.sendSuccess(res, result, RESPONSE_STATUS.SUCCESS_CREATED)
             })
             .catch((err) => {
                 respHndlr.sendError(res, err)

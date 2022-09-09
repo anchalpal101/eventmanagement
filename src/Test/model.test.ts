@@ -1,6 +1,5 @@
 import sequelize, { DATE } from "sequelize"
-import { Calender } from "../models/User"
-//const uuid = require("uuid")
+import { Calender } from "../models/Calender"
 const uuid = require('uuid')
 
 let fakeId = uuid.v4()
@@ -10,8 +9,8 @@ let eventinfo = {
     description: "hello",
     startDate: new Date(),
     endDate: new Date(),
-    startTime: new Date(),
-    endTime: new Date()
+    startTime:"09:00:00" ,
+    endTime: "10:00:00"
 
 }
 
@@ -54,7 +53,6 @@ test("Should give error while finding a tenant with invalid title", async () => 
             where: { title: "invalidtitle" },
         });
     } catch (error) {
-        //SequelizeValidationError
         expect(error).toBeInstanceOf(sequelize.DatabaseError);
 
     }

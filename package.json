@@ -9,7 +9,7 @@
     "dev": "nodemon src/App.ts",
     "build": "npm run build-ts",
     "build-ts": "tsc",
-    "test": "jest"
+    "test": "jest src/Test/function.test.ts"
   },
   "author": "",
   "license": "ISC",

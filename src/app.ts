@@ -8,7 +8,7 @@ import connectPSQlDb from './config/dbConnection';
 const port = normalizePort(8080);
 
 // Instantiate the expressServer class
-let expressInstance = new expressServer() .expressInstance;
+export let expressInstance = new expressServer() .expressInstance;
 
 // Make port available within server
 expressInstance.set('port', port);

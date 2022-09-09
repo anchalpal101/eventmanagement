@@ -13,8 +13,8 @@ export interface CalenderInterface {
     description: string
     startDate: Date
     endDate: Date
-    startTime: Date
-    endTime: Date
+    startTime: string
+    endTime: string
 }
 export interface ICalenderInterface
     extends sequelize.Instance<CalenderInterface>,
