@@ -72,7 +72,7 @@ export const Calender: sequelize.Model<
         // Auto-create timestamps
         timestamps: true,
         // Enable soft deletes
-        paranoid: true,
+        paranoid: false,
     },
 
 

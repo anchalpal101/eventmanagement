@@ -18,16 +18,21 @@ class eventService {
             let existDate = await this.getConflictingStatus(req?.body)
             //
             console.log('exist date ', existDate)
+            if((startDate < endDate) && (startTime < endTime)){
 
-            if (existDate) {
-                throw new Exception(ERROR_TYPE.ALREADY_EXISTS, "An event for this slot already exists.")
+                if (existDate) {
+                    throw new Exception(ERROR_TYPE.ALREADY_EXISTS, "An event for this slot already exists.")
 
+                }
+                else {
+
+                    console.log("Event Created successfully")
+                    let createtimeEvent = await Calender.create(req.body)
+                    return Promise.resolve(createtimeEvent);
+                }
             }
-            else {
-
-                console.log("Event Created successfully")
-                let createtimeEvent = await Calender.create(req.body)
-                return Promise.resolve(createtimeEvent);
+            else{
+                throw new Exception(ERROR_TYPE.NOT_ALLOWED,' either startdate > enddate  or starttime > endTime' )
             }
         }
         catch (err) {
@@ -93,7 +98,8 @@ class eventService {
 
                     console.log("Event updated successfully")
                     let updatetimeEvent = await Calender.update(req.body, {
-                        where: { id: req.params.id }
+                        where: { id: req.params.id },
+                        returning:true
 
                     })
                     // console.log(updatetimeEvent)
@@ -150,12 +156,13 @@ class eventService {
     async getConflictingStatus(requestBody: any) {
         const { startDate, endDate, startTime, endTime } = requestBody
         var existDate = await Calender.findOne({ where: { startDate: startDate, endDate: endDate }, })
-        if ((startDate < endDate) && (startTime < endTime)) {
+            console.log(existDate,'step1>>>>>>>>>>>>>>')
+       
             if (existDate) {
                 let existTime = await Calender.findOne({ where: { startTime: startTime, endTime: endTime }, })
 
                 if (existTime) {
-                    //throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Date exist')
+                    throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Date exist')
                 }
                 else {
                     const findTEvent = await Calender.findOne({
@@ -167,15 +174,15 @@ class eventService {
                                             startTime: {
                                                 [Op.gt]: startTime
                                             }
-
+                
                                         },
                                         {
                                             startTime: {
                                                 [Op.eq]: endTime
                                             }
-
+                
                                         }
-
+                
                                     ]
                                 },
                                 {
@@ -184,28 +191,34 @@ class eventService {
                                             endTime: {
                                                 [Op.eq]: startTime
                                             }
-
+                
                                         },
                                         {
-
+                
                                             endTime: {
                                                 [Op.lt]: endTime
                                             }
-
+                
                                         }
-
+                
                                     ]
                                 },
                                 {
                                     [Op.and]: [
                                         {
-
+                                            startTime: {
+                                                [Op.lt]: startTime
+                                            }
+                
+                                        },
+                                        {
+                
                                             endTime: {
                                                 [Op.eq]: endTime
                                             }
-
+                
                                         }
-
+                
                                     ]
                                 },
                                 {
@@ -214,16 +227,16 @@ class eventService {
                                             startTime: {
                                                 [Op.eq]: startTime
                                             }
-
+                
                                         },
                                         {
-
+                
                                             endTime: {
                                                 [Op.gt]: endTime
                                             }
-
+                
                                         }
-
+                
                                     ]
                                 },
                                 {
@@ -232,7 +245,13 @@ class eventService {
                                             startTime: {
                                                 [Op.gt]: startTime
                                             }
-
+                
+                                        },
+                                        {
+                                            startTime: {
+                                                [Op.lt]: endTime
+                                            }
+                
                                         }
                                     ]
                                 },
@@ -242,13 +261,13 @@ class eventService {
                                             endTime: {
                                                 [Op.gt]: startTime
                                             }
-
+                
                                         },
                                         {
                                             endTime: {
                                                 [Op.lt]: endTime
                                             }
-
+                
                                         }
                                     ]
                                 },
@@ -258,18 +277,18 @@ class eventService {
                                             startTime: {
                                                 [Op.lt]: startTime
                                             }
-
+                
                                         },
                                         {
                                             endTime: {
                                                 [Op.gt]: endTime
                                             }
-
+                
                                         }
                                     ]
                                 }
                             ]
-
+                
                         }
                     })
                     if (findTEvent) {
@@ -415,12 +434,9 @@ class eventService {
 
             }
         }
-        else {
-            throw new Exception(ERROR_TYPE.NOT_ALLOWED, 'either start date is greater than enddate,either startTime is greater')
-
-        }
+       
     }
-}
+
 
 
 let eventServiceInstance = new eventService()

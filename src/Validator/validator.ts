@@ -28,7 +28,9 @@ class calenderValidator extends Validator {
                     check('endDate').trim().optional().notEmpty().withMessage('endDate is required').isDate().withMessage('endDate in a date type'),
                     check('startTime').trim().optional().notEmpty().withMessage('startTime is required').matches('^([0-4]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])?$').withMessage('startTime not in a correct format'),
                     check('endTime').trim().optional().notEmpty().withMessage('endTime is required').matches('^([0-4]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9])?$').withMessage('endTime not in a correct format'),
+                    
                 ]
+
 
         })
     }
